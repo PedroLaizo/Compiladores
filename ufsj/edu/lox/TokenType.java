@@ -1,0 +1,16 @@
+package ufsj.edu.lox;
+
+ enum TokenType {
+	 //Tokens com 1 caractere
+	 LEFT_PAREN, RIGHT_PAREN, LEFT_BRACE, RIGHT_BRACE, COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, STAR,
+	 BANG, BANG_EQUAL, EQUAL, EQUAL_EQUAL, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL,
+	 
+	 //Coisas mais complexas
+	 AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NIL, OR, PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
+	 
+	 IDENTIFIER, NUMBER, STRING,  
+	 
+	 //Fim de arquivo
+	 EOF
+
+}
