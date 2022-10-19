@@ -5,6 +5,8 @@ import static ufsj.edu.lox.TokenType.*;
 
 
 public class Parser {
+	private static class ParseError extends RuntimeException{}
+	
 	private final List<Token> tokens;
 	private int current = 0;
 	
@@ -120,9 +122,49 @@ public class Parser {
 			return new Expr.Grouping(expr);
 		}
 		
-		return null;
+		throw error(peek(), "Expect expression");
 	}
 	
-	private void consume(TokenType t, String msg) {
+	private Token consume(TokenType token, String message) {
+		if(check(token))
+			return advance();
+		
+		throw error(peek(), message);
 	}
+	
+	private ParseError error(Token token, String message) {
+		Lox.error(token, message);
+		return new ParseError();
+	}
+	
+	private void synchronize() {
+		advance();
+		
+		while(!isAtEnd()) {
+			if(previous().type == TokenType.SEMICOLON) return;
+			
+			switch(peek().type) {
+			case CLASS:
+			case FUN:
+			case VAR:
+			case FOR:
+			case IF:
+			case WHILE:
+			case PRINT:
+			case RETURN:
+			return;
+			}
+			
+			advance();
+		}
+	}
+	
+	Expr parse() {
+		try {
+			return expression();
+		} catch (ParseError error) {
+			return null;
+		}
+	}
+	
 }

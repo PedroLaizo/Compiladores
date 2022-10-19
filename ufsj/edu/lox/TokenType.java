@@ -8,7 +8,7 @@ package ufsj.edu.lox;
 	 //Coisas mais complexas
 	 AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NIL, OR, PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
 	 
-	 IDENTIFIER, NUMBER, STRING,  
+	 IDENTIFIER, NUMBER, STRING,
 	 
 	 //Fim de arquivo
 	 EOF
