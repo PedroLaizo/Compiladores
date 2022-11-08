@@ -107,6 +107,44 @@ public class Parser {
 		return primary();
 	}
 	
+	private Expr ternary() {
+		Expr expr = or();
+		
+		if(match(QUESTION)) {
+			Token leftOperator = previous();
+			Expr middle = expression();
+			Token rightOperator = consume(COLON, "Expected ':' in ternary operator.");
+			Expr right = expression();
+			expr = new Expr.Ternary(expr, leftOperator, middle, rightOperator, right);
+		}
+		
+		return expr;
+	}
+	
+	private Expr or() {
+		Expr expr = expression();
+		
+		while(match(TokenType.OR)) {
+			Token operator = previous();
+			Expr right = and();
+			expr = new Expr.Logical(expr, operator, right);
+		}
+		
+		return expr;
+	}
+	
+	private Expr and() {
+		Expr expr = equality();
+		
+		while(match(TokenType.AND)) {
+			Token operator = previous();
+			Expr right = equality();
+			expr = new Expr.Logical(expr, operator, right);
+		}
+		
+		return expr;
+	}
+	
 	private Expr primary() {
 		if(match(FALSE)) return new Expr.Literal(false);
 		if(match(TRUE)) return new Expr.Literal(true);
