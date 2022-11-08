@@ -45,15 +45,10 @@ public class Lox {
 	private static void run(String source) {
 		Scanner scanner = new Scanner(source);
 		List<Token> tokens = scanner.scanTokens();
-		
-		Parser parser = new Parser(tokens);
-		Expr expression = parser.parse();
-		
-		//em caso de erros, por enquanto, encerramos a exec
-		if(hadError) return;
-		
-		System.out.println(new AstPrinter().print(expression));
-	
+		//por enquanto apenas mostra tokens
+		for(Token token : tokens) {
+			System.out.println(token);
+		}
 	}
 	
 	static void error(int line, String message) {
@@ -61,7 +56,7 @@ public class Lox {
 	}
 	
 	private static void report(int line, String where, String message) {
-		System.err.println("[line " + line + "] Error " + where + ": '" + message);
+		System.err.println("[line " + line + "] Error " + where + ": " + message);
 		hadError = true;
 	}
 	
