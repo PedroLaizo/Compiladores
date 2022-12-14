@@ -1,5 +1,3 @@
-package ufsj.edu.lox;
-
 import ufsj.edu.lox.Expr.Logical;
 import ufsj.edu.lox.Expr.Ternary;
 
@@ -84,6 +82,12 @@ public class Interpreter implements Expr.Visitor<Object>{
 			if(left instanceof String && right instanceof String) {
 				return (String)left + (String)right;
 			}
+			if (left instanceof String && right instanceof Double) {
+				return (String)left + stringify(right);
+			}
+			if (left instanceof Double && right instanceof String){
+				return stringify(left) + (String)right;
+			}
 			throw new RuntimeError(expr.operator, "Operands must be two numbers or two strings.");
 		case MINUS:
 			checkNumberOperand(expr.operator, right);
@@ -132,13 +136,11 @@ public class Interpreter implements Expr.Visitor<Object>{
 
 	@Override
 	public Object visitTernaryExpr(Ternary expr) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Object visitLogicalExpr(Logical expr) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
